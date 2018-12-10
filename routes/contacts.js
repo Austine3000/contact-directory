@@ -97,6 +97,13 @@ router.put('/:id/update', function(req, res, next) {
             res.json(contact);
         });
     }
-})
+});
+
+router.delete('/:id/delete', function(req, res, next) {
+    Contact.findByIdAndRemove(req.params.id, function (err) {
+        if (err) return next(err);
+        res.send('Deleted successfully!');
+    })
+});
 
 module.exports = router;

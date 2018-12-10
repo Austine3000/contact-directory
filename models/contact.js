@@ -7,7 +7,7 @@ var ContactSchema = new Schema(
         first_name: {type: String, required: true, max: 100},
         last_name: {type: String, required: true, max: 100},
         phone_number: {type: String, required: true, max: 20},
-        Category: {type: String, required: true, enum: ['FRONT-END', 'BACK-END', 'DEV-OPS', 'FULLSTACK'], default: 'FULLSTACK'}
+        category: {type: String, required: true, enum: ['FRONT-END', 'BACK-END', 'DEV-OPS', 'FULLSTACK'], default: 'FULLSTACK'}
     }
 );
 
@@ -18,4 +18,10 @@ ContactSchema
     return this.last_name + ', ' + this.first_name;
 });
 
-module.exports = mongoose.model('Contact', ContactSchema)
+ContactSchema
+.virtual('url')
+.get(function() {
+    return '/contact/' + this._id;
+});
+
+module.exports = mongoose.model('Contact', ContactSchema);

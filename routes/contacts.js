@@ -41,4 +41,12 @@ router.post('/create', function(req, res) {
     }
 });
 
+router.get(':/id', function(req, res) {
+    Contact.findById(req.params.id)
+        .exec(function (err, single_contact) {
+            if (err) { return next(err); }
+            res.json({ contact: single_contact });
+        });
+});
+
 module.exports = router;

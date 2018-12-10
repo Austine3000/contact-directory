@@ -3,7 +3,7 @@ var router = express.Router();
 
 var Contact = require('../models/contact');
 
-router.post('/create', function(req, res) {
+router.post('/create', function(req, res, next) {
     req.checkBody('first_name', 'First name must be specified.').notEmpty(); 
     req.checkBody('last_name', 'Last name must be specified.').notEmpty();
     req.checkBody('phone_number', 'Phone number must be specified.').notEmpty(); 
@@ -41,12 +41,20 @@ router.post('/create', function(req, res) {
     }
 });
 
-router.get(':/id', function(req, res) {
+router.get('/:id', function(req, res, next) {
     Contact.findById(req.params.id)
         .exec(function (err, single_contact) {
             if (err) { return next(err); }
             res.json({ contact: single_contact });
         });
 });
+
+router.get('/', function(req, res, next) {
+    Contact.find({})
+        .exec(function (err, list_contacts) {
+            if(err) { return next(err); }
+            res.json({ contact: list_contacts });
+        })
+})
 
 module.exports = router;

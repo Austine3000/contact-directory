@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
             if(err) { return next(err); }
             res.json({ contact: list_contacts });
         })
-})
+});
 
 router.put('/:id/update', function(req, res, next) {
     req.sanitize('id').escape();
